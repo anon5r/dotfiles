@@ -3,17 +3,15 @@
 # It should contain commands to set up aliases,
 # functions, options, key bindings, etc.
 #
-
-export PATH=$PATH:/usr/local/bin
-#export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin
-#export PATH=$PATH:~/bin
-export PATH=$PATH:~/bin:~/bin/depot_tools
-
-export GEM_HOME=/usr/lib/ruby/gems/1.8
-
-# for MacPorts
-#export PATH=/opt/local/bin:/opt/local/sbin/:$PATH:~/bin
-
+if [ "$OSTYPE" = "linux" ]; then
+	export PATH=$PATH:/usr/local/bin
+	#export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin
+	export PATH=$PATH:~/bin
+elif [ "$OSTYPE" == "darwin" ]; then
+	export PATH=$PATH:~/bin:~/bin/depot_tools
+	# for MacPorts
+	export PATH=/opt/local/bin:/opt/local/sbin/:$PATH:~/bin
+}
 #LD_LIBRARY_PATH=/usr/local/lib:/usr/sfw/lib:/opt/sfw/lib
 #LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib
 #LD_LIBRARY_PATH_64=/usr/local/lib64:/usr/lib64
