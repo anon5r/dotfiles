@@ -137,6 +137,12 @@ alias zf='/usr/local/lib/php/ZendFramework/bin/zf.sh'
 alias mysql='/usr/local/mysql/bin/mysql'
 alias mysqladmin='/usr/local/mysql/bin/mysqladmin'
 alias mysqlimport='/usr/local/mysql/bin/mysqlimport'
+alias mysql_config='/usr/local/mysql/bin/mysql_config'
+alias mysqlbinlog='/usr/local/mysql/bin/mysqlbinlog'
+alias mysqldump='/usr/local/mysql/bin/mysqldump'
+alias mysqlhotcopy='/usr/local/mysql/bin/mysqlhotcopy'
+alias mysqlmanager='/usr/local/mysql/bin/mysqlmanager'
+alias mysqlcheck='/usr/local/mysql/bin/mysqlcheck'
 
 
 # Ruby Version Manager (rvm)
