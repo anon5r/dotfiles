@@ -6,7 +6,7 @@
 
 if [ $LANG != "ja_JP.UTF-8" ] && [ $LANG != "en_US.UTF-8" ]; then
     export LANG_OLD=$LANG
-    export LANG = ja_JP.UTF-8
+    export LANG=ja_JP.UTF-8
 fi
 
 # config for OS types
