@@ -3,6 +3,13 @@
 # It should contain commands to set up aliases,
 # functions, options, key bindings, etc.
 #
+
+if [ $LANG != "ja_JP.UTF-8" ] && [ $LANG != "en_US.UTF-8" ]; then
+    export LANG_OLD=$LANG
+    export LANG = ja_JP.UTF-8
+fi
+
+# config for OS types
 if [ "$OSTYPE" = "linux" ]; then
 	export PATH=$PATH:/usr/local/bin
 	#export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin
@@ -11,10 +18,10 @@ elif [ "$OSTYPE" = "darwin" ]; then
 	export PATH=$PATH:~/bin:~/bin/depot_tools
 	# for MacPorts
 	export PATH=/opt/local/bin:/opt/local/sbin/:$PATH:~/bin
+    LD_LIBRARY_PATH=/usr/local/lib:/usr/sfw/lib:/opt/sfw/lib
+    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib
+
 fi
-#LD_LIBRARY_PATH=/usr/local/lib:/usr/sfw/lib:/opt/sfw/lib
-#LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib
-#LD_LIBRARY_PATH_64=/usr/local/lib64:/usr/lib64
 
 # function
 find-grep  () { find . -type f -print | xargs grep -n --binary-files=without-match $@ }
