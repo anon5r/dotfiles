@@ -89,3 +89,7 @@ endif
 " 起動時のメッセージを表示しない
 set shortmess+=I
 
+
+Bundle 'nginx.vim'
+au BufRead,BufNewFile /usr/local/nginx/conf/* set ft=nginx
+
