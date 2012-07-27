@@ -6,7 +6,8 @@
 
 if [ $LANG != "ja_JP.UTF-8" ] && [ $LANG != "en_US.UTF-8" ]; then
     export LANG_OLD=$LANG
-    export LANG=ja_JP.UTF-8
+    #export LANG=ja_JP.UTF-8
+    export LANG=en_US.UTF-8
 fi
 
 # config for OS types
@@ -14,7 +15,7 @@ if [ "$OSTYPE" = "linux" ]; then
 	export PATH=$PATH:/usr/local/bin
 	#export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin
 	export PATH=$PATH:~/bin
-elif [ "$OSTYPE" = "darwin" ]; then
+elif [ $OSTYPE = darwin* ]; then
 	export PATH=$PATH:~/bin:~/bin/depot_tools
 	# for MacPorts
 	export PATH=/opt/local/bin:/opt/local/sbin/:$PATH:~/bin
@@ -81,6 +82,7 @@ setopt auto_list
 setopt auto_menu
 setopt auto_resume
 setopt auto_name_dirs
+setopt combining_chars
 
 #setopt no_beep
 
@@ -153,7 +155,7 @@ alias mysqlcheck='/usr/local/mysql/bin/mysqlcheck'
 
 
 # Ruby Version Manager (rvm)
-if [[ -s $HOME/.rvm/scripts/rvm ]] ; then source $HOME/.rvm/scripts/rvm ; fi
+#if [[ -s $HOME/.rvm/scripts/rvm ]] ; then source $HOME/.rvm/scripts/rvm ; fi
 
 
 
@@ -166,3 +168,16 @@ if [ "x$SHLVL" != "x1" ]; then # We're not a login shell
     done
     unset i
 fi
+
+#if [[ -e ~/.rvm/scripts/rvm ]] && [[ -s ~/.rvm/scripts/rvm ]] ; then
+#	export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+#	source ~/.rvm/scripts/rvm
+#fi
+
+# Support for rbenv
+if [[ -e $HOME/.rbenv/bin ]] && [[ -s $HOME/.rbenv/bin ]]; then
+	export PATH=$PATH:$HOME/.rbenv/bin
+	
+	eval "$(rbenv init -)"
+fi
+
