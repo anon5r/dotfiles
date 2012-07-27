@@ -25,6 +25,7 @@ set hidden
 set incsearch
 "タブ文字、行末など不可視文字を表示する
 "set list
+"set listchars=tab:→\ ,trail:_,precedes:&#171;,extends:&#187;
 "listで表示される文字のフォーマットを指定する
 set listchars=eol:$,tab:>\ ,extends:<
 "行番号を表示する
@@ -89,7 +90,4 @@ endif
 " 起動時のメッセージを表示しない
 set shortmess+=I
 
-
-Bundle 'nginx.vim'
-au BufRead,BufNewFile /usr/local/nginx/conf/* set ft=nginx
 
