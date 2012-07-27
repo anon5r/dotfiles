@@ -11,18 +11,19 @@ if [ $LANG != "ja_JP.UTF-8" ] && [ $LANG != "en_US.UTF-8" ]; then
 fi
 
 # config for OS types
-if [ "$OSTYPE" = "linux" ]; then
+if [ `uname -s` = "Linux" ]; then
 	export PATH=$PATH:/usr/local/bin
 	#export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin
 	export PATH=$PATH:~/bin
-elif [ $OSTYPE = darwin* ]; then
+elif [ `uname -s` = "Darwin" ]; then
 	export PATH=$PATH:~/bin:~/bin/depot_tools
 	# for MacPorts
 	export PATH=/opt/local/bin:/opt/local/sbin/:$PATH:~/bin
     LD_LIBRARY_PATH=/usr/local/lib:/usr/sfw/lib:/opt/sfw/lib
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib
-
 fi
+
+echo "`uname -s` configuration loaded."
 
 # function
 find-grep  () { find . -type f -print | xargs grep -n --binary-files=without-match $@ }
