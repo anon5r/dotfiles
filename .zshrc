@@ -16,9 +16,9 @@ if [ `uname -s` = "Linux" ]; then
 	#export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin
 	export PATH=$PATH:~/bin
 elif [ `uname -s` = "Darwin" ]; then
-	export PATH=$PATH:~/bin:~/bin/depot_tools
+	export PATH=$PATH:/usr/local/bin:$HOME/bin:$HOME/bin/depot_tools
 	# for MacPorts
-	export PATH=/opt/local/bin:/opt/local/sbin/:$PATH:~/bin
+	#export PATH=/opt/local/bin:/opt/local/sbin/:$PATH:~/bin
     LD_LIBRARY_PATH=/usr/local/lib:/usr/sfw/lib:/opt/sfw/lib
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib
 fi
@@ -139,7 +139,11 @@ alias zln='noglob zmv -L'
 alias ren='noglob zmv -W'
 
 alias view="vim -R -N --noplugin"
-alias ls='ls -F --color'
+if [ `uname -s` = "Darwin" ]; then
+	alias ls='ls -FG'
+else
+	alias ls='ls -F --color'
+fi
 alias ll='ls -lha'
 alias py='python'
 alias zf='/usr/local/lib/php/ZendFramework/bin/zf.sh'
