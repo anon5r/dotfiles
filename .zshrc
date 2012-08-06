@@ -144,7 +144,7 @@ if [ `uname -s` = "Darwin" ]; then
 	alias ls='ls -dFG'
 else
 	# GNULS
-	alias ls='ls -d -F --color=auto'
+	alias ls='ls -F --color=auto'
 fi
 alias ll='ls -lh'
 alias la='ls -lha'
