@@ -140,11 +140,17 @@ alias ren='noglob zmv -W'
 
 alias view="vim -R -N --noplugin"
 if [ `uname -s` = "Darwin" ]; then
-	alias ls='ls -FG'
+	# ls colors ( like BSD )
+	alias ls='ls -dFG'
 else
-	alias ls='ls -F --color'
+	# GNULS
+	alias ls='ls -d -F --color=auto'
 fi
-alias ll='ls -lha'
+alias ll='ls -lh'
+alias la='ls -lha'
+if [ `command -v colordiff` &>/dev/null ]; then
+	alias diff='colordiff'
+fi
 alias py='python'
 alias zf='/usr/local/lib/php/ZendFramework/bin/zf.sh'
 
