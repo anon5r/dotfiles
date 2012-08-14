@@ -50,6 +50,9 @@ HISTFILE=~/.zsh_history
 HISTSIZE=1000000
 SAVEHIST=1000000
 
+# 指定秒以上かかった処理は詳細表示                                                                                                                                             
+REPORTTIME=2
+
 autoload -U colors ; colors
 
 setopt complete_in_word
@@ -141,7 +144,7 @@ alias ren='noglob zmv -W'
 alias view="vim -R -N --noplugin"
 if [ `uname -s` = "Darwin" ]; then
 	# ls colors ( like BSD )
-	alias ls='ls -dFG'
+	alias ls='ls -FG'
 else
 	# GNULS
 	alias ls='ls -F --color=auto'
