@@ -196,11 +196,6 @@ if [ "x$SHLVL" != "x1" ]; then # We're not a login shell
     unset i
 fi
 
-#if [[ -e ~/.rvm/scripts/rvm ]] && [[ -s ~/.rvm/scripts/rvm ]] ; then
-#	export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-#	source ~/.rvm/scripts/rvm
-#fi
-
 # Support for rbenv
 if [[ -e $HOME/.rbenv/bin ]] && [[ -s $HOME/.rbenv/bin ]]; then
 	export PATH=$PATH:$HOME/.rbenv/bin
