@@ -12,13 +12,10 @@ fi
 
 # config for OS types
 if [ `uname -s` = "Linux" ]; then
-	export PATH=$PATH:/usr/local/bin
+	export PATH=$HOME/bin:/usr/local/bin:$PATH
 	#export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin
-	export PATH=$PATH:~/bin
 elif [ `uname -s` = "Darwin" ]; then
-	export PATH=$PATH:/usr/local/bin:$HOME/bin:$HOME/bin/depot_tools
-	# for MacPorts
-	#export PATH=/opt/local/bin:/opt/local/sbin/:$PATH:~/bin
+	export PATH=$HOME/bin:/usr/local/bin:$HOME/bin/depot_tools:$PATH
     LD_LIBRARY_PATH=/usr/local/lib:/usr/sfw/lib:/opt/sfw/lib
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib
 fi
@@ -247,6 +244,16 @@ if [[ -e $HOME/.rbenv/bin ]] && [[ -s $HOME/.rbenv/bin ]]; then
 fi
 
 if [ `uname` = "Darwin" ]; then
-	export PATH="$(brew --prefix php54)/bin:$PATH"
+	export PATH="$(brew --prefix php55)/bin:$PATH"
 fi
+
+
+# Support for phpenv
+if [[ -e $HOME/.phpenv/bin ]] && [[ -s $HOME/.phpenv/bin ]]; then
+	export PATH=$HOME/.phpenv/bin:$PATH
+	eval "$(phpenv init -)"
+fi
+
+PATH=.:$PATH
+
 
