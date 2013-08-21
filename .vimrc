@@ -90,4 +90,5 @@ endif
 " 起動時のメッセージを表示しない
 set shortmess+=I
 
-
+" Syntaxes
+au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/conf/*,/usr/local/etc/nginx if &ft == '' | setfiletype nginx | endif 
