@@ -208,3 +208,6 @@ if [[ -e $HOME/.rbenv/bin ]] && [[ -s $HOME/.rbenv/bin ]]; then
 	eval "$(rbenv init -)"
 fi
 
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
