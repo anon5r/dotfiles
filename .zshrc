@@ -12,13 +12,10 @@ fi
 
 # config for OS types
 if [ `uname -s` = "Linux" ]; then
-	export PATH=$PATH:/usr/local/bin
+	export PATH=$HOME/bin:/usr/local/bin:$PATH
 	#export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin
-	export PATH=$PATH:~/bin
 elif [ `uname -s` = "Darwin" ]; then
-	export PATH=$PATH:/usr/local/bin:$HOME/bin:$HOME/bin/depot_tools
-	# for MacPorts
-	#export PATH=/opt/local/bin:/opt/local/sbin/:$PATH:~/bin
+	export PATH=$HOME/bin:/usr/local/bin:$HOME/bin/depot_tools:$PATH
     LD_LIBRARY_PATH=/usr/local/lib:/usr/sfw/lib:/opt/sfw/lib
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib
 fi
@@ -32,7 +29,9 @@ find-grep  () { find . -type f -print | xargs grep -n --binary-files=without-mat
 autoload -U colors ; colors
 
 # command complete
-autoload -U compinit ; compinit
+fpath=(~/.zsh/completion $fpath)
+autoload -U compinit ; compinit 
+compinit -u
 zstyle ':completion:*' menu select=1
 #zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
@@ -157,15 +156,56 @@ fi
 alias py='python'
 alias zf='/usr/local/lib/php/ZendFramework/bin/zf.sh'
 
-alias mysql='/usr/local/mysql/bin/mysql'
-alias mysqladmin='/usr/local/mysql/bin/mysqladmin'
-alias mysqlimport='/usr/local/mysql/bin/mysqlimport'
-alias mysql_config='/usr/local/mysql/bin/mysql_config'
-alias mysqlbinlog='/usr/local/mysql/bin/mysqlbinlog'
-alias mysqldump='/usr/local/mysql/bin/mysqldump'
-alias mysqlhotcopy='/usr/local/mysql/bin/mysqlhotcopy'
-alias mysqlmanager='/usr/local/mysql/bin/mysqlmanager'
-alias mysqlcheck='/usr/local/mysql/bin/mysqlcheck'
+if [ `uname -s` = "Darwin" ]; then
+	alias mysql='/usr/local/opt/mysql/bin/mysql'
+	alias mysqladmin='/usr/local/opt/mysql/bin/mysqladmin'
+	alias mysqlimport='/usr/local/opt/mysql/bin/mysqlimport'
+	alias mysql_config='/usr/local/opt/mysql/bin/mysql_config'
+	alias mysqlbinlog='/usr/local/opt/mysql/bin/mysqlbinlog'
+	alias mysqldump='/usr/local/opt/mysql/bin/mysqldump'
+	alias mysqlhotcopy='/usr/local/opt/mysql/bin/mysqlhotcopy'
+	alias mysqlmanager='/usr/local/opt/mysql/bin/mysqlmanager'
+	alias mysqlcheck='/usr/local/opt/mysql/bin/mysqlcheck'
+
+else
+	alias mysql='/usr/local/mysql/bin/mysql'
+	alias mysqladmin='/usr/local/mysql/bin/mysqladmin'
+	alias mysqlimport='/usr/local/mysql/bin/mysqlimport'
+	alias mysql_config='/usr/local/mysql/bin/mysql_config'
+	alias mysqlbinlog='/usr/local/mysql/bin/mysqlbinlog'
+	alias mysqldump='/usr/local/mysql/bin/mysqldump'
+	alias mysqlhotcopy='/usr/local/mysql/bin/mysqlhotcopy'
+	alias mysqlmanager='/usr/local/mysql/bin/mysqlmanager'
+	alias mysqlcheck='/usr/local/mysql/bin/mysqlcheck'
+fi
+
+function extract() {
+  case $1 in
+    *.tar.gz|*.tgz) tar xzvf $1;;
+    *.tar.xz) tar Jxvf $1;;
+    *.zip) unzip $1;;
+    *.lzh) lha e $1;;
+    *.tar.bz2|*.tbz) tar xjvf $1;;
+    *.tar.Z) tar zxvf $1;;
+    *.gz) gzip -dc $1;;
+    *.bz2) bzip2 -dc $1;;
+    *.Z) uncompress $1;;
+    *.tar) tar xvf $1;;
+    *.arj) unarj $1;;
+  esac
+}
+alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
+if [ `uname` = "Darwin" ]; then
+  alias google-chrome='open -a Google\ Chrome'
+fi
+alias chrome='google-chrome'
+alias -s html=chrome
+function runcpp () { g++ -O2 $1; ./a.out }
+alias -s {c,cpp}=runcpp
+alias -s pl=perl
+alias -s py=python
+alias -s rb=ruby
+alias -s php=php
 
 
 # vcs_info
@@ -196,18 +236,27 @@ if [ "x$SHLVL" != "x1" ]; then # We're not a login shell
     unset i
 fi
 
-#if [[ -e ~/.rvm/scripts/rvm ]] && [[ -s ~/.rvm/scripts/rvm ]] ; then
-#	export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-#	source ~/.rvm/scripts/rvm
-#fi
-
 # Support for rbenv
 if [[ -e $HOME/.rbenv/bin ]] && [[ -s $HOME/.rbenv/bin ]]; then
-	export PATH=$PATH:$HOME/.rbenv/bin
+	export PATH=$HOME/.rbenv/bin:$PATH
 	
 	eval "$(rbenv init -)"
 fi
 
+if [ `uname` = "Darwin" ]; then
+	export PATH="$(brew --prefix php55)/bin:$PATH"
+fi
+
+
+# Support for phpenv
+if [[ -e $HOME/.phpenv/bin ]] && [[ -s $HOME/.phpenv/bin ]]; then
+	export PATH=$HOME/.phpenv/bin:$PATH
+	eval "$(phpenv init -)"
+fi
+
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+PATH=.:$PATH
+
 

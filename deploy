@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DEST=`pwd`
+cd ~
+ln -s $DEST/.zshrc ~/.zshrc
+ln -s $DEST/.vimrc ~/.vimrc
+ln -s $DEST/.gemrc ~/.gemrc
+ln -s $DEST/.tmux.conf ~/.tmux.conf
+
