@@ -254,6 +254,9 @@ if [[ -e $HOME/.phpenv/bin ]] && [[ -s $HOME/.phpenv/bin ]]; then
 	eval "$(phpenv init -)"
 fi
 
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
 PATH=.:$PATH
 
 
