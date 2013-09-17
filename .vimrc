@@ -23,6 +23,8 @@ set nocompatible
 set hidden
 "インクリメンタルサーチを行う
 set incsearch
+"大文字小文字を無視
+set ignorecase
 "タブ文字、行末など不可視文字を表示する
 "set list
 "set listchars=tab:→\ ,trail:_,precedes:&#171;,extends:&#187;
@@ -66,6 +68,9 @@ match ZenkakuSpace /　/
 
 " ステータスラインに表示する情報の指定
 set statusline=%n\:%y%F\ \|%{(&fenc!=''?&fenc:&enc).'\|'.&ff.'\|'}%m%r%=<%l/%L:%p%%>
+" ステータスラインを常に表示する
+set laststatus=2
+highlight StatusLine ctermfg=gray ctermbg=darkblue
 
 " 文字コードの設定
 " fileencodingsの設定ではencodingの値を一番最後に記述する
@@ -90,5 +95,31 @@ endif
 " 起動時のメッセージを表示しない
 set shortmess+=I
 
+" 補完形式
+set wildmenu wildmode=list:full
+
+
 " Syntaxes
-au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/conf/*,/usr/local/etc/nginx if &ft == '' | setfiletype nginx | endif 
+au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/conf/*,/usr/local/etc/nginx if &ft == '' | setfiletype nginx | endif
+
+
+"
+" NeoVundle設定
+" 
+set nocompatible
+filetype off
+if has('vim_starting')
+	set runtimepath+=~/.vim/bundle/neobundle.vim
+	call neobundle#rc(expand('~/.vim/bundle/'))
+endif
+NeoBundleFetch 'Shougo/neobundle.vim'
+" NeoBundle modules
+NeoBundle 'Shougo/vimproc'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Lokaltog/vim-easymotion'
+NeoBundle 'rstacruz/sparkup', {'rtp':'vim/'}
+NeoBundle 'rails.vim'
+filetype plugin indent on
+filetype indent on
+

@@ -1,9 +1,47 @@
 #!/bin/sh
 
-DEST=`pwd`
+DEST=`dirname ${0}`
 cd ~
-ln -s $DEST/.zshrc ~/.zshrc
-ln -s $DEST/.vimrc ~/.vimrc
-ln -s $DEST/.gemrc ~/.gemrc
-ln -s $DEST/.tmux.conf ~/.tmux.conf
+if [ ! -e ~/.zshrc ]; then
+	ln -s $DEST/.zshrc ~/.zshrc
+elif [ ! -L ~/.zshrc ]; then
+	echo "Replace .zshrc for dotfiles"
+	mv ~/.zshrc ~/.zshrc.old
+	ln -s $DEST/.zshrc ~/.zshrc
+fi
+if [ ! -e ~/.vimrc ]; then
+	ln -s $DEST/.vimrc ~/.vimrc
+elif [ ! -L ~/.vimrc ]; then
+	echo "Replace .vimrc for dotfiles"
+	mv ~/.vimrc ~/.vimrc.old
+	ln -s $DEST/.vimrc ~/.vimrc
+fi
+if [ ! -e ~/.gemrc ]; then
+	ln -s $DEST/.gemrc ~/.gemrc
+elif [ ! -L ~/.gemrc ]; then
+	echo "Replace .gemrc for dotfiles"
+	mv ~/.gemrc ~/.gemrc.old
+	ln -s $DEST/.gemrc ~/.gemrc
+fi
+if [ ! -e ~/.tmux.conf ]; then
+	ln -s $DEST/.tmux.conf ~/.tmux.conf
+elif [ ! -L ~/.tmux.conf ]; then
+	echo "Replace .tmux.conf for dotfiles"
+	mv ~/.tmux.conf ~/.tmux.conf.old
+	ln -s $DEST/.tmux.conf ~/.tmux.conf
+fi
+
+
+# Environment of NeoBundle for Vim
+if [ ! -e ~/.vim ]; then
+   echo "No ~/.vim directory detected."
+   mkdir -p ~/.vim/bundle
+   echo "~/.vim directory created."
+fi
+if [ ! -e ~/.vim/bundle/neobundle.vim ]; then
+   echo "No 'NeoBundle' for Vim plugin detected."
+   echo "Installing NeoBundle..."
+   git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+   vim +NeoBundleInstall +q
+fi
 
