@@ -166,7 +166,11 @@ if [ `uname -s` = "Darwin" ]; then
 	alias mysqlhotcopy='/usr/local/opt/mysql/bin/mysqlhotcopy'
 	alias mysqlmanager='/usr/local/opt/mysql/bin/mysqlmanager'
 	alias mysqlcheck='/usr/local/opt/mysql/bin/mysqlcheck'
-
+	
+	if [[ "$TMUX" != "" ]]; then
+		alias pbcopy="ssh 127.0.0.1 pbcopy"
+		alias launchctl="ssh 127.0.0.1 launchctl"
+	fi
 else
 	alias mysql='/usr/local/mysql/bin/mysql'
 	alias mysqladmin='/usr/local/mysql/bin/mysqladmin'
@@ -227,7 +231,7 @@ precmd () {
 
 
 # like a bash
-if [ "x$SHLVL" != "x1" ]; then # We're not a login shell
+if [ "x$SHLVL" != "x1" ] && [ -d /etc/profile.d ]; then # We're not a login shell
     for i in /etc/profile.d/*.sh; do
         if [ -r "$i" ]; then
             . $i
@@ -257,6 +261,13 @@ fi
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
+### Dependency local profiles
+if [ -f $HOME/.zshrc.local ]; then
+	source $HOME/.zshrc.local
+fi 
+
+
 PATH=.:$PATH
+
 
 
