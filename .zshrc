@@ -156,7 +156,7 @@ fi
 alias py='python'
 alias zf='/usr/local/lib/php/ZendFramework/bin/zf.sh'
 
-if [ `uname -s` = "Darwin" && -f /usr/local/opt/mysql/bin/mysql ]; then
+if [ `uname -s` = "Darwin" ] && [ -d /usr/local/opt/mysql ]; then
 	alias mysql='/usr/local/opt/mysql/bin/mysql'
 	alias mysqladmin='/usr/local/opt/mysql/bin/mysqladmin'
 	alias mysqlimport='/usr/local/opt/mysql/bin/mysqlimport'
