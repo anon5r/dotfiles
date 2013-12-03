@@ -252,14 +252,21 @@ if [ `uname` = "Darwin" ]; then
 fi
 
 
-# Support for phpenv
-if [[ -e $HOME/.phpenv/bin ]] && [[ -s $HOME/.phpenv/bin ]]; then
-	export PATH=$HOME/.phpenv/bin:$PATH
-	eval "$(phpenv init -)"
+## Support for phpenv
+#if [[ -e $HOME/.phpenv/bin ]] && [[ -s $HOME/.phpenv/bin ]]; then
+#	export PATH=$HOME/.phpenv/bin:$PATH
+#	eval "$(phpenv init -)"
+#fi
+
+# Support for nvm
+if [ -d $HOME/.nvm ]; then
+	source $HOME/.nvm/nvm.sh
 fi
 
 ### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+if [[ -d /usr/local/heroku/bin ]]; then
+	export PATH="/usr/local/heroku/bin:$PATH"
+fi
 
 ### Dependency local profiles
 if [ -f $HOME/.zshrc.local ]; then
