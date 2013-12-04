@@ -1,15 +1,19 @@
 #!/bin/sh
 # Git config
-git config --global core.editor vim
 git config --global alias.ad add
 git config --global alias.br branch
 git config --global alias.co checkout
 git config --global alias.ci commit
 git config --global alias.df diff
 git config --global alias.ft fetch
+git config --global alias.last "log -1 HEAD"
 git config --global alias.st status
+git config --global alias.unstage "reset HEAD --"
 git config --global color.ui true
 git config --global color.diff true
+git config --global core.editor vim
+git config --global core.excludesfile "~/.gitignore"
+git config --global merge.ff false
 # refs: http://yuroyoro.hatenablog.com/entry/20101008/1286531851
 git config --global alias.dc "diff --cached"
 git config --global alias.ds "diff --staged"

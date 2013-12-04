@@ -57,6 +57,10 @@ if [ ! -e ~/.config/git/attributes ]; then
 	fi
 	cp -a $SCRIPT_PATH/.config/git/attributes ~/.config/git/attributes
 fi
+if [ ! -e ~/.gitignore ]; then
+	cp -a $SCRIPT_PATH/.config/git/ignore ~/.gitignore
+fi
+# do git configuration
 $SCRIPT_PATH/gitconfig
 
 # Install rbenv
