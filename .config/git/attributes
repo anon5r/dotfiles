@@ -1,0 +1,13 @@
+; diff
+*.html	diff=html
+*.rb	diff=ruby
+*.php	diff=php
+*.pl	diff=perl
+*.py	diff=python
+*.c		diff=cpp
+*.cc	diff=cpp
+*.cpp	diff=cpp
+*.m		diff=objc
+*.mm	diff=objc
+*.cs	diff=csharp
+*.java	diff=java

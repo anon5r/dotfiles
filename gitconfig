@@ -1,0 +1,28 @@
+#!/bin/sh
+# Git config
+git config --global core.editor vim
+git config --global alias.ad add
+git config --global alias.br branch
+git config --global alias.co checkout
+git config --global alias.ci commit
+git config --global alias.df diff
+git config --global alias.ft fetch
+git config --global alias.st status
+git config --global color.ui true
+git config --global color.diff true
+# refs: http://yuroyoro.hatenablog.com/entry/20101008/1286531851
+git config --global alias.dc "diff --cached"
+git config --global alias.ds "diff --staged"
+git config --global alias.dm "diff master"
+git config --global alias.la "log --pretty=\"format:%ad %h (%an): %s\" --date=short"
+git config --global alias.lp "log -p"
+git config --global alias.ls "log --stat"
+git config --global alias.edit-unmerged "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim \`f\`"
+git config --global alias.add-unmerged "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add \`f\`"
+git config --global alias.log-graph "log --graph --date=short --pretty=format:'%Cgreen%h %cd %Cblue%cn %Creset%s'"
+git config --global alias.log-all "log --graph --all --color --pretty='%x09%h %cn%x09%s %Cred%d%Creset'"
+git config --global color.branch true
+git config --global color.grep true
+git config --global color.interactive true
+git config --global color.status true
+

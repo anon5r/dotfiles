@@ -4,6 +4,7 @@ SETUP_RUBY_VERSION="2.0.0-p247"
 SETUP_NODE_VERSION="0.10.12"
 
 DEST=`dirname ${0}`
+SCRIPT_PATH=$(cd $(dirname ${0});pwd)
 cd ~
 if [ ! -e ~/.zshrc ]; then
 	ln -s $DEST/.zshrc ~/.zshrc
@@ -48,6 +49,15 @@ if [ ! -e ~/.vim/bundle/neobundle.vim ]; then
    vim +NeoBundleInstall +q
 fi
 
+
+# Git setup
+if [ ! -e ~/.config/git/attributes ]; then
+	if [ ! -d ~/.config/git ]; then
+		mkdir -p ~/.config/git
+	fi
+	cp -a $SCRIPT_PATH/.config/git/attributes ~/.config/git/attributes
+fi
+$SCRIPT_PATH/gitconfig
 
 # Install rbenv
 if [ ! -e ~/.rbenv ]; then
