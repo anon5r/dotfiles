@@ -35,14 +35,31 @@ compinit -u
 zstyle ':completion:*' menu select=1
 #zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
+zstyle ':completion:*:manuals' separate-sections true
 #zstyle ':completion:*' list-colors "${LS_COLORS}"
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:cd:*' tag-order local-directories path-directories
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+zstyle ':completion:*:*files' ignored-patterns '*?.o' '*?~' '*\#'
+zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list _history
+zstyle ':completion:*:messages' format '%F{YELLOW}%d'$DEFAULT
+zstyle ':completion:*:warnings' format '%F{RED}No matches for:''%F{YELLOW} %d'$DEFAULT
+zstyle ':completion:*:descriptions' format '%F{YELLOW}completing %B%d%b'$DEFAULT
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:descriptions' format '%F{yellow}Completing %B%d%b%f'$DEFAULT
+zstyle ':completion:*' group-name ''
+# sudores
 zstyle ':completion:*:sudo:*' menu select=1
 #zstyle ':completion:*:sudo:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*:sudo:*' matcher-list 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
 #zstyle ':completion:*:sudo:*' list-colors "${LS_COLORS}"
 zstyle ':completion:*:sudo:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:sudo:cd:*' tag-order local-directories path-directories
+zstyle ':completion:*:sudo:cd:*' ignore-parents parent pwd
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
+zstyle ':completion:*:sudo:*:*files' ignored-patterns '*?.o' '*?~' '*\#'
 
 
 HISTFILE=~/.zsh_history
@@ -86,6 +103,9 @@ setopt auto_menu
 setopt auto_resume
 setopt auto_name_dirs
 setopt combining_chars
+setopt brace_ccl
+setopt extended_glob
+setopt globdots
 
 #setopt no_beep
 
@@ -228,6 +248,19 @@ precmd () {
 	RPROMPT=$vcs_info_msg_0_
 }
 
+
+# git flow completion
+if [ -d ~/.zsh/git-flow-completion ]; then
+	source ~/.zsh/git-flow-completion/git-flow-completion.zsh
+	# cheat-sheet
+	cheat-sheet () { zle -M "`cat ~/zsh/cheat-sheet.conf`" }
+	zle -N cheat-sheet
+	bindkey "^[^h" cheat-sheet
+	
+	git-cheat () { zle -M "`cat ~/zsh/git-cheat.conf`" }
+	zle -N git-cheat
+	bindkey "^[^g" git-cheat
+fi
 
 
 # like a bash
