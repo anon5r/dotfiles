@@ -90,7 +90,7 @@ if [ ! -d ~/.zsh/completion ]; then
 	curl https://raw.github.com/git/git/master/contrib/completion/git-completion.zsh > ~/.zsh/completion/_git
 fi
 if [ ! -d ~/.zsh/git-flow-completion ]; then
-	git clone git clone https://github.com/bobthecow/git-flow-completion.git ~/.zsh/git-flow-completion
+	git clone https://github.com/bobthecow/git-flow-completion.git ~/.zsh/git-flow-completion
 fi
 
 # Install rbenv
