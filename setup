@@ -9,7 +9,7 @@ SCRIPT_PATH=$(cd $(dirname ${0});pwd)
 IN_RUBY=0
 IN_NODE=0
 
-while getopts rn: OPT
+while getopts :rn OPT
 do
 	case $OPT in
 		"r")
@@ -94,28 +94,36 @@ if [ ! -d ~/.zsh/git-flow-completion ]; then
 fi
 
 # Install rbenv
-if [[ $IN_RUBY -eq 1 ]] && [[ ! -e ~/.rbenv ]]; then
-	echo "Installing rbenv..."
-	git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
-	git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-	export PATH="$HOME/.rbenv/bin:$PATH"
-	eval "$(rbenv init -)"
-	echo "Install ruby-${SETUP_RUBY_VERSION} ..."
-	rbenv install $SETUP_RUBY_VERSION
-	rebenv rehash
-	rbenv local $SETUP_RUBY_VERSION
-	rbenv global $SETUP_RUBY_VERSION
+if [[ $IN_RUBY -eq 1 ]]; then
+	if [[ ! -e ~/.rbenv ]]; then
+		echo "Installing rbenv..."
+		git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+		git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+		export PATH="$HOME/.rbenv/bin:$PATH"
+		eval "$(rbenv init -)"
+		echo "Install ruby-${SETUP_RUBY_VERSION} ..."
+		rbenv install $SETUP_RUBY_VERSION
+		rebenv rehash
+		rbenv local $SETUP_RUBY_VERSION
+		rbenv global $SETUP_RUBY_VERSION
+	else
+		echo "rbenv is already installed."
+	fi
 fi
 
 # Install nvm
-if [[ $IN_NODE -eq 1 ]] && [[ ! -e ~/.nvm ]]; then
-	echo "Install nvm..."
-	curl https://raw.github.com/creationix/nvm/master/install.sh | sh
-	source ~/.nvm/nvm.sh
-	echo "Install node-${SETUP_NODE_VERSION} ..."
-	nvm install $SETUP_NODE_VERSION
-	nvm use $SETUP_NODE_VERSION
-	nvm alias default $SETUP_NODE_VERSION
+if [[ $IN_NODE -eq 1 ]]; then
+	if [[ ! -e ~/.nvm ]]; then
+		echo "Install nvm..."
+		curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+		source ~/.nvm/nvm.sh
+		echo "Install node-${SETUP_NODE_VERSION} ..."
+		nvm install $SETUP_NODE_VERSION
+		nvm use $SETUP_NODE_VERSION
+		nvm alias default $SETUP_NODE_VERSION
+	else
+		echo "nvm is already installed."
+	fi
 fi
 
 # Install nodebrew
