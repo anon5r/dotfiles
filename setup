@@ -1,7 +1,7 @@
 #!/bin/sh
 
 SETUP_RUBY_VERSION="2.0.0-p247"
-SETUP_NODE_VERSION="0.10.12"
+SETUP_NODE_VERSION="0.10.22"
 
 DEST=`dirname ${0}`
 SCRIPT_PATH=$(cd $(dirname ${0});pwd)
