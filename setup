@@ -99,10 +99,12 @@ if [ ! -e ~/bin/tig ]; then
 		mkdir -p ~/tmp
 	fi
 	if [ ! -e ~/tmp/tig ]; then
+		pushd tmp
 		git clone https://github.com/jonas/tig.git
 		pushd tig
 		make
 		make install
+		popd
 		popd
 	fi
 fi
@@ -151,6 +153,5 @@ fi
 #fi
 
 
-exec $SHELL
-
+source ~/.zshrc
 
