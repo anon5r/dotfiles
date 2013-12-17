@@ -93,6 +93,20 @@ if [ ! -d ~/.zsh/git-flow-completion ]; then
 	git clone https://github.com/bobthecow/git-flow-completion.git ~/.zsh/git-flow-completion
 fi
 
+# Installing tig
+if [ ! -e ~/bin/tig ]; then
+	if [ ! -d ~/tmp ]; then
+		mkdir -p ~/tmp
+	fi
+	if [ ! -e ~/tmp/tig ]; then
+		git clone https://github.com/jonas/tig.git
+		pushd tig
+		make
+		make install
+		popd
+	fi
+fi
+
 # Install rbenv
 if [[ $IN_RUBY -eq 1 ]]; then
 	if [[ ! -e ~/.rbenv ]]; then
