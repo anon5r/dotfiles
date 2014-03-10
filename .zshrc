@@ -66,7 +66,7 @@ HISTFILE=~/.zsh_history
 HISTSIZE=1000000
 SAVEHIST=1000000
 
-# �����ðʾ夫���ä������Ͼܺ�ɽ��                                                                                                                                             
+# 指定秒以上かかった処理は詳細表示                                                                                                                                             
 REPORTTIME=2
 
 autoload -U colors ; colors
