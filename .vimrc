@@ -120,6 +120,8 @@ NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'rstacruz/sparkup', {'rtp':'vim/'}
 NeoBundle 'rails.vim'
+NeoBundle 'alpaca-tc/alpaca_powertabline'
+NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 filetype plugin indent on
 filetype indent on
 
