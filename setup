@@ -3,7 +3,6 @@
 SETUP_RUBY_VERSION="2.0.0-p247"
 SETUP_NODE_VERSION="0.10.22"
 
-DEST=`dirname ${0}`
 SCRIPT_PATH=$(cd $(dirname ${0});pwd)
 
 IN_RUBY=0
@@ -27,32 +26,32 @@ done
 
 cd ~
 if [ ! -e ~/.zshrc ]; then
-	ln -s $DEST/.zshrc ~/.zshrc
+	ln -s $SCRIPT_PATH/.zshrc ~/.zshrc
 elif [ ! -L ~/.zshrc ]; then
 	echo "Replace .zshrc for dotfiles"
 	mv ~/.zshrc ~/.zshrc.old
-	ln -s $DEST/.zshrc ~/.zshrc
+	ln -s $SCRIPT_PATH/.zshrc ~/.zshrc
 fi
 if [ ! -e ~/.vimrc ]; then
-	ln -s $DEST/.vimrc ~/.vimrc
+	ln -s $SCRIPT_PATH/.vimrc ~/.vimrc
 elif [ ! -L ~/.vimrc ]; then
 	echo "Replace .vimrc for dotfiles"
 	mv ~/.vimrc ~/.vimrc.old
-	ln -s $DEST/.vimrc ~/.vimrc
+	ln -s $SCRIPT_PATH/.vimrc ~/.vimrc
 fi
 if [ ! -e ~/.gemrc ]; then
-	ln -s $DEST/.gemrc ~/.gemrc
+	ln -s $SCRIPT_PATH/.gemrc ~/.gemrc
 elif [ ! -L ~/.gemrc ]; then
 	echo "Replace .gemrc for dotfiles"
 	mv ~/.gemrc ~/.gemrc.old
-	ln -s $DEST/.gemrc ~/.gemrc
+	ln -s $SCRIPT_PATH/.gemrc ~/.gemrc
 fi
 if [ ! -e ~/.tmux.conf ]; then
-	ln -s $DEST/.tmux.conf ~/.tmux.conf
+	ln -s $SCRIPT_PATH/.tmux.conf ~/.tmux.conf
 elif [ ! -L ~/.tmux.conf ]; then
 	echo "Replace .tmux.conf for dotfiles"
 	mv ~/.tmux.conf ~/.tmux.conf.old
-	ln -s $DEST/.tmux.conf ~/.tmux.conf
+	ln -s $SCRIPT_PATH/.tmux.conf ~/.tmux.conf
 fi
 
 
@@ -81,7 +80,13 @@ if [ ! -e ~/.gitignore ]; then
 	cp -a $SCRIPT_PATH/.config/git/ignore ~/.gitignore
 fi
 # do git configuration
+echo "Applying gitconfig..."
 $SCRIPT_PATH/gitconfig
+
+if [ ! -d ~/.zsh ]; then
+	mkdir -p ~/.zsh
+fi
+
 
 # git completion
 if [ ! -d ~/.zsh/completion ]; then
@@ -89,9 +94,18 @@ if [ ! -d ~/.zsh/completion ]; then
 	curl https://raw.github.com/git/git/master/contrib/completion/git-completion.bash > ~/.zsh/completion/git-completion.bash
 	curl https://raw.github.com/git/git/master/contrib/completion/git-completion.zsh > ~/.zsh/completion/_git
 fi
-if [ ! -d ~/.zsh/git-flow-completion ]; then
-	git clone https://github.com/bobthecow/git-flow-completion.git ~/.zsh/git-flow-completion
+
+echo "Downloading submodules..."
+git submodule update --init
+
+if [ ! -e ~/.fonts ]; then
+	ln -s $SCRIPT_PATH/.fonts ~/.fonts
 fi
+
+if [ ! -e ~/.plugins ]; then
+	ln -s $SCRIPT_PATH/.plugins ~/.plugins
+fi
+
 
 # Installing tig
 if [ ! -e ~/bin/tig ]; then
@@ -153,5 +167,6 @@ fi
 #fi
 
 
+echo "Reload rc file."
 source ~/.zshrc
 
