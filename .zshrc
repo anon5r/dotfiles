@@ -235,14 +235,14 @@ alias -s php=php
 # vcs_info
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git svn
-zstyle ':vcs_info:*' formats '%F{green}[%f%F{red}%b%f%F{green}] (%s)%f'
-zstyle ':vcs_info:*' actionformats '%f(%F{cyan}%s%f:%F{green}%b%f|%F{red}%a%f)'
-zstyle ':vcs_info:svn:*' branchformat '%F{red}%b%f%F{green}:r%r%f'
+#zstyle ':vcs_info:*' formats '%F{green}[%f%F{red}%b%f%F{green}] (%s)%f'
+#zstyle ':vcs_info:*' actionformats '%f(%F{cyan}%s%f:%F{green}%b%f|%F{red}%a%f)'
+#zstyle ':vcs_info:svn:*' branchformat '%F{red}%b%f%F{green}:r%r%f'
 zstyle ':vcs_info:git:*' check-for-changes true
 zstyle ':vcs_info:git:*' stagedstr '+'
 zstyle ':vcs_info:git:*' unstagedstr '-'
-zstyle ':vcs_info:git:*' formats '%F{green}[%f%F{red}%b%f%F{green}%c%F{red}%u%f%F{green}] (%s)%f'
-zstyle ':vcs_info:git:*' actionformats '%f(%F{green}%b%f|%F{red}%a%f%F{green}%c%F{red}%u%f)'
+#zstyle ':vcs_info:git:*' formats '%F{green}[%f%F{red}%b%f%F{green}%c%F{red}%u%f%F{green}] (%s)%f'
+#zstyle ':vcs_info:git:*' actionformats '%f(%F{green}%b%f|%F{red}%a%f%F{green}%c%F{red}%u%f)'
 precmd () {
 	LANG=en_US.UTF-8 vcs_info
 	RPROMPT=$vcs_info_msg_0_

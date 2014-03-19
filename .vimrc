@@ -67,7 +67,7 @@ highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=darkgray
 match ZenkakuSpace /　/
 
 " ステータスラインに表示する情報の指定
-set statusline=%n\:%y%F\ \|%{(&fenc!=''?&fenc:&enc).'\|'.&ff.'\|'}%m%r%=<%l/%L:%p%%>
+set statusline=%n\:%y%F\ \|%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']\|'}%m%r%=<%l/%L:%p%%>
 " ステータスラインを常に表示する
 set laststatus=2
 highlight StatusLine ctermfg=gray ctermbg=darkblue
@@ -103,8 +103,10 @@ set wildmenu wildmode=list:full
 au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/conf/*,/usr/local/etc/nginx if &ft == '' | setfiletype nginx | endif
 
 
-"
-" NeoVundle設定
+
+
+
+" NeoBundle設定
 " 
 set nocompatible
 filetype off
@@ -122,6 +124,7 @@ NeoBundle 'rstacruz/sparkup', {'rtp':'vim/'}
 NeoBundle 'rails.vim'
 NeoBundle 'alpaca-tc/alpaca_powertabline'
 NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
+"NeoBundle 'itchyny/lightline.vim',{ 'gui': 1 }
 filetype plugin indent on
 filetype indent on
 
