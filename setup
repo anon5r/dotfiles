@@ -109,9 +109,15 @@ if [ ! -e ~/.plugins ]; then
 	ln -s $SCRIPT_PATH/_plugins ~/.plugins
 fi
 
-if [ ! -d ~/.fonts.conf.f ]; then
+if [ ! -d ~/.fonts.conf.d ]; then
 	echo "Setup fonts config directory..."
 	mkdir -p ~/.fonts.conf.d
+fi
+if [ ! -d ~/.fonts.conf.d/10-powerline-symbols.conf ]; then
+	cp ~/.plugins/tmux/powerline/font/10-powerline-symbols.conf ~/.fonts.conf.d/
+fi
+if [ ! -d ~/.fonts.conf.d/PowerlineSymbols.otf ]; then
+	cp ~/.plugins/tmux/powerline/font/PowerlineSymbols.otf ~/.fonts.conf.d/
 fi
 
 
@@ -178,4 +184,5 @@ fi
 
 echo "Reload rc file."
 source ~/.zshrc
+
 

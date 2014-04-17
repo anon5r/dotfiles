@@ -256,10 +256,10 @@ fi
 
 
 # like a bash
-if [ "x$SHLVL" != "x1" ] && [ -d /etc/profile.d ]; then # We're not a login shell
+if [ "x$SHLVL" != "x1" ] && [[ -d /etc/profile.d ]]; then # We're not a login shell
     for i in /etc/profile.d/*.sh; do
         if [ -r "$i" ]; then
-            . $i
+            source $i
         fi
     done
     unset i
@@ -300,4 +300,6 @@ fi
 
 
 export PATH=.:$PATH
+
+
 
