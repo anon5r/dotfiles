@@ -250,16 +250,8 @@ precmd () {
 
 
 # git flow completion
-if [ -d ~/.zsh/git-flow-completion ]; then
+if [ -d ~/.zsh/git-flow-completion/git-flow-completion.zsh ]; then
 	source ~/.zsh/git-flow-completion/git-flow-completion.zsh
-	# cheat-sheet
-	cheat-sheet () { zle -M "`cat ~/zsh/cheat-sheet.conf`" }
-	zle -N cheat-sheet
-	bindkey "^[^h" cheat-sheet
-	
-	git-cheat () { zle -M "`cat ~/zsh/git-cheat.conf`" }
-	zle -N git-cheat
-	bindkey "^[^g" git-cheat
 fi
 
 
@@ -307,7 +299,5 @@ if [ -f $HOME/.zshrc.local ]; then
 fi 
 
 
-PATH=.:$PATH
-
-
+export PATH=.:$PATH
 

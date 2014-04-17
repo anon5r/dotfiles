@@ -1,9 +1,9 @@
-[submodule ".plugins/tmux/powerline"]
-	path = .plugins/tmux/powerline
+[submodule "_plugins/tmux/powerline"]
+	path = _plugins/tmux/powerline
 	url = git://github.com/Lokaltog/powerline.git
-[submodule ".fonts/powerline"]
-	path = .fonts/powerline
+[submodule "_fonts/powerline"]
+	path = _fonts/powerline
 	url = https://github.com/Lokaltog/powerline-fonts.git
-[submodule ".zsh/git-flow-completion"]
-	path = .zsh/git-flow-completion
+[submodule "_zsh/git-flow-completion"]
+	path = _zsh/git-flow-completion
 	url = git://github.com/bobthecow/git-flow-completion.git

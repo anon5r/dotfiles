@@ -26,32 +26,32 @@ done
 
 cd ~
 if [ ! -e ~/.zshrc ]; then
-	ln -s $SCRIPT_PATH/.zshrc ~/.zshrc
+	ln -s $SCRIPT_PATH/_zshrc ~/.zshrc
 elif [ ! -L ~/.zshrc ]; then
 	echo "Replace .zshrc for dotfiles"
 	mv ~/.zshrc ~/.zshrc.old
-	ln -s $SCRIPT_PATH/.zshrc ~/.zshrc
+	ln -s $SCRIPT_PATH/_zshrc ~/.zshrc
 fi
 if [ ! -e ~/.vimrc ]; then
-	ln -s $SCRIPT_PATH/.vimrc ~/.vimrc
+	ln -s $SCRIPT_PATH/_vimrc ~/.vimrc
 elif [ ! -L ~/.vimrc ]; then
 	echo "Replace .vimrc for dotfiles"
 	mv ~/.vimrc ~/.vimrc.old
-	ln -s $SCRIPT_PATH/.vimrc ~/.vimrc
+	ln -s $SCRIPT_PATH/_vimrc ~/.vimrc
 fi
 if [ ! -e ~/.gemrc ]; then
-	ln -s $SCRIPT_PATH/.gemrc ~/.gemrc
+	ln -s $SCRIPT_PATH/_gemrc ~/.gemrc
 elif [ ! -L ~/.gemrc ]; then
 	echo "Replace .gemrc for dotfiles"
 	mv ~/.gemrc ~/.gemrc.old
-	ln -s $SCRIPT_PATH/.gemrc ~/.gemrc
+	ln -s $SCRIPT_PATH/_gemrc ~/.gemrc
 fi
 if [ ! -e ~/.tmux.conf ]; then
-	ln -s $SCRIPT_PATH/.tmux.conf ~/.tmux.conf
+	ln -s $SCRIPT_PATH/_tmux.conf ~/.tmux.conf
 elif [ ! -L ~/.tmux.conf ]; then
 	echo "Replace .tmux.conf for dotfiles"
 	mv ~/.tmux.conf ~/.tmux.conf.old
-	ln -s $SCRIPT_PATH/.tmux.conf ~/.tmux.conf
+	ln -s $SCRIPT_PATH/_tmux.conf ~/.tmux.conf
 fi
 
 
@@ -74,10 +74,10 @@ if [ ! -e ~/.config/git/attributes ]; then
 	if [ ! -d ~/.config/git ]; then
 		mkdir -p ~/.config/git
 	fi
-	cp -a $SCRIPT_PATH/.config/git/attributes ~/.config/git/attributes
+	cp -a $SCRIPT_PATH/_config/git/attributes ~/.config/git/attributes
 fi
 if [ ! -e ~/.gitignore ]; then
-	cp -a $SCRIPT_PATH/.config/git/ignore ~/.gitignore
+	cp -a $SCRIPT_PATH/_config/git/ignore ~/.gitignore
 fi
 # do git configuration
 echo "Applying gitconfig..."
@@ -91,29 +91,33 @@ fi
 # git completion
 if [ ! -d ~/.zsh/completion ]; then
 	mkdir -p ~/.zsh/completion
-	curl https://raw.github.com/git/git/master/contrib/completion/git-completion.bash > ~/.zsh/completion/git-completion.bash
-	curl https://raw.github.com/git/git/master/contrib/completion/git-completion.zsh > ~/.zsh/completion/_git
 fi
+curl https://raw.github.com/git/git/master/contrib/completion/git-completion.bash > ~/.zsh/completion/git-completion.bash
+curl https://raw.github.com/git/git/master/contrib/completion/git-completion.zsh > ~/.zsh/completion/_git
+
 
 echo "Downloading submodules..."
 git submodule update --init
 
 if [ ! -e ~/.fonts ]; then
-	ln -s $SCRIPT_PATH/.fonts ~/.fonts
+	echo "Setup fonts for powerline..."
+	ln -s $SCRIPT_PATH/_fonts ~/.fonts
 fi
 
 if [ ! -e ~/.plugins ]; then
-	ln -s $SCRIPT_PATH/.plugins ~/.plugins
+	echo "Setup plugins for powerline..."
+	ln -s $SCRIPT_PATH/_plugins ~/.plugins
 fi
 
 if [ ! -d ~/.fonts.conf.f ]; then
+	echo "Setup fonts config directory..."
 	mkdir -p ~/.fonts.conf.d
 fi
-cp -a ~/.plugins/tmux/powerline/font/10-powerline-symbols.conf
 
 
 # Installing tig
 if [ ! -e ~/bin/tig ]; then
+	echo "Installing tig for git..."
 	if [ ! -d ~/tmp ]; then
 		mkdir -p ~/tmp
 	fi
