@@ -61,6 +61,11 @@ set tabstop=4
 set whichwrap=b,s,h,l,<,>,[,]
 "検索をファイルの先頭へループしない
 "set nowrapscan
+"undofileの作成場所を制御
+set undodir=~/tmp/vim/undo
+"undofileを作成しない
+set noundofile
+
 
 " 全角スペースの表示
 highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=darkgray
