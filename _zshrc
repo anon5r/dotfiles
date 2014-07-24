@@ -14,10 +14,13 @@ fi
 if [ `uname -s` = "Linux" ]; then
 	export PATH=$HOME/bin:/usr/local/bin:$PATH
 	#export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin
+	export PATH=$PATH:~/bin
+	LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64:/usr/lib:/usr/lib64:/lib
 elif [ `uname -s` = "Darwin" ]; then
 	export PATH=$HOME/bin:/usr/local/bin:$HOME/bin/depot_tools:$PATH
     LD_LIBRARY_PATH=/usr/local/lib:/usr/sfw/lib:/opt/sfw/lib
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib
+    ARCHFLAGS="-arch `arch`"
 fi
 
 echo "`uname -s` configuration loaded."
