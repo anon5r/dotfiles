@@ -131,6 +131,7 @@ NeoBundle 'alpaca-tc/alpaca_powertabline'
 NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 "NeoBundle 'itchyny/lightline.vim',{ 'gui': 1 }
 NeoBundle 'toyamarinyon/vim-swift'
+NeoBundle 'terryma/vim-multiple-cursors'
 filetype plugin indent on
 filetype indent on
 
