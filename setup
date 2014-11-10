@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SETUP_RUBY_VERSION="2.0.0-p247"
+SETUP_RUBY_VERSION="2.1.0"
 SETUP_NODE_VERSION="0.10.22"
 
 SCRIPT_PATH="$(cd $(dirname "${0}");pwd)"
@@ -92,8 +92,12 @@ fi
 if [ ! -d ~/.zsh/completion ]; then
 	mkdir -p ~/.zsh/completion
 fi
-curl https://raw.github.com/git/git/master/contrib/completion/git-completion.bash > ~/.zsh/completion/git-completion.bash
-curl https://raw.github.com/git/git/master/contrib/completion/git-completion.zsh > ~/.zsh/completion/_git
+if [ ! -f ~/.zsh/completion/git-completion.bash ]; then
+	curl https://raw.github.com/git/git/master/contrib/completion/git-completion.bash > ~/.zsh/completion/git-completion.bash
+fi
+if [ ! -f ~/.zsh/completion/_git ]; then
+	curl https://raw.github.com/git/git/master/contrib/completion/git-completion.zsh > ~/.zsh/completion/_git
+fi
 
 
 echo "Downloading submodules..."
