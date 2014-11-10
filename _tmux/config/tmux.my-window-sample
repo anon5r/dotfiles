@@ -1,0 +1,69 @@
+### 1st Window
+## Create New Window
+neww -n my-app
+
+## Splits
+# Vertical split
+splitw -h -d
+# Horizontal split
+splitw -d
+# Move Right Pane
+selectp -R
+# Horizontal split (twice)
+splitw -d
+selectp -D
+splitw -d
+# Resize Right side
+selectp -t 4
+resizep 10
+selectp -t 2
+resizep 5
+
+
+# 左上のペインは client-base
+send -t my-app.0 'cd ~/Workspace/repos/my-client' C-m
+send -t my-app.0 'git pull origin develop'
+
+# 左下のペインは client-resources
+send -t my-app.1 'cd ~/Workspace/repos/my-client/projects/my/Resources' C-m
+send -t my-app.1 'git pull origin develop'
+
+# 右上段のペインは client-classes
+send -t my-app.2 'cd ~/Workspace/repos/my-client/projects/my/Classes' C-m
+send -t my-app.2 'git pull origin develop'
+
+
+# 右中段のペインは client-ios
+send -t my-app.3 'cd ~/Workspace/repos/my-client/projects/my/proj.ios' C-m
+send -t my-app.3 'git pull origin develop'
+
+
+# 右下段のペインは client-android
+send -t my-app.4 'cd ~/Workspace/repos/my-client/projects/my/proj.android' C-m
+send -t my-app.4 'git pull origin develop'
+
+
+
+### 2nd Window
+# Create New window
+neww -n my-web
+# Divide 3 rows panes
+splitw -d
+selectp -D
+splitw -d
+selectp -D
+splitw -d
+
+# 上のペインはサイト
+send -t my-web.0 'cd ~/Sites/app.my' C-m
+send -t my-web.0 'git pull origin develop'
+# 真ん中のペインはログ
+send -t my-web.1 'cd ~/Sites/app.my' C-m
+send -t my-web.1 'bin/taillog.sh' C-m
+
+# my-web の上野ペインを選択
+selectp -t my-web.0
+# my-app の左上のペインを選択
+selectw -t my-app
+selectp -t my-app.0
+
