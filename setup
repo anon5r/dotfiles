@@ -126,7 +126,7 @@ fi
 
 
 # Install homebrew
-if [ ! -e /usr/bin/brew ]; then
+if [ ! -e /usr/local/Cellar ]; then
 	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
