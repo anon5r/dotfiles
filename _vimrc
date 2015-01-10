@@ -118,7 +118,9 @@ filetype off
 if has('vim_starting')
 	set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
-call neobundle#rc(expand('~/.vim/bundle/'))
+call neobundle#begin()
+call expand('~/.vim/bundle/')
+call neobundle#end()
 NeoBundleFetch 'Shougo/neobundle.vim'
 " NeoBundle modules
 NeoBundle 'Shougo/vimproc'
