@@ -21,6 +21,9 @@ elif [ `uname -s` = "Darwin" ]; then
     LD_LIBRARY_PATH=/usr/local/lib:/usr/sfw/lib:/opt/sfw/lib
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib
     ARCHFLAGS="-arch `arch`"
+	if [ `xcode-select -p` ]; then
+		export PATH=`xcode-select -p`/usr/bin:$PATH
+	fi
 fi
 
 echo "`uname -s` configuration loaded."
@@ -276,7 +279,7 @@ if [[ -e $HOME/.rbenv/bin ]] && [[ -s $HOME/.rbenv/bin ]]; then
 fi
 
 if [ `uname` = "Darwin" ]; then
-	export PATH="$(brew --prefix php55)/bin:$PATH"
+	export PATH="$(brew --prefix php56)/bin:$PATH"
 fi
 
 

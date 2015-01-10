@@ -125,6 +125,11 @@ if [ ! -d ~/.fonts.conf.d/PowerlineSymbols.otf ] && [ -e ~/.plugins/tmux/powerli
 fi
 
 
+# Install homebrew
+if [ ! -e /usr/bin/brew ]; then
+	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
+
 # Installing tig
 if [ ! -e ~/bin/tig ]; then
 	echo "Installing tig for git..."
