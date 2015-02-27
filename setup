@@ -54,6 +54,9 @@ elif [ ! -L ~/.tmux.conf ]; then
 	ln -s "$SCRIPT_PATH/_tmux.conf" ~/.tmux.conf
 fi
 
+if [ ! -e ~/tmp/vim/undo ]; then
+	mkdir -p ~/tmp/vim/undo
+fi
 
 # Environment of NeoBundle for Vim
 if [ ! -e ~/.vim ]; then
