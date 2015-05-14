@@ -68,8 +68,13 @@ if [ ! -e ~/.vim/bundle/neobundle.vim ]; then
    echo "No 'NeoBundle' for Vim plugin detected."
    echo "Installing NeoBundle..."
    git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
-   vim +NeoBundleInstall +q
+else
+   echo "Updating NeoBundle..."
+   cd ~/.vim/bundle/neobundle.vim
+   git pull origin master
+   cd ~
 fi
+vim +NeoBundleInstall +q
 
 
 # Git setup
