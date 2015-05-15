@@ -1,14 +1,16 @@
 #!/bin/sh
 
-SETUP_RUBY_VERSION="2.1.0"
-SETUP_NODE_VERSION="0.10.22"
+SETUP_RUBY_VERSION="2.2.2"
+SETUP_NODE_VERSION="0.12.2"
+SETUP_PYTHON_VERSION="2.7.9"
 
 SCRIPT_PATH="$(cd $(dirname "${0}");pwd)"
 
 IN_RUBY=0
 IN_NODE=0
+IN_PYTHON=0
 
-while getopts :rn OPT
+while getopts :rnp OPT
 do
 	case $OPT in
 		"r")
@@ -16,6 +18,9 @@ do
 			;;
 		"n")
 			IN_NODE=1
+			;;
+		"p")
+			IN_PYTHON=1
 			;;
 		*)
 			;;
@@ -68,8 +73,13 @@ if [ ! -e ~/.vim/bundle/neobundle.vim ]; then
    echo "No 'NeoBundle' for Vim plugin detected."
    echo "Installing NeoBundle..."
    git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
-   vim +NeoBundleInstall +q
+else
+   echo "Updating NeoBundle..."
+   cd ~/.vim/bundle/neobundle.vim
+   git pull origin master
+   cd ~
 fi
+vim +NeoBundleInstall +q
 
 
 # Git setup
@@ -165,6 +175,9 @@ if [ $IN_RUBY -eq 1 ]; then
 		rbenv global $SETUP_RUBY_VERSION
 	else
 		echo "rbenv is already installed."
+		cd ~/.rbenv/plugins/ruby-build
+		git pull origin master
+		cd ~
 	fi
 fi
 
@@ -183,15 +196,22 @@ if [ $IN_NODE -eq 1 ]; then
 	fi
 fi
 
-# Install nodebrew
-#if [ ! -e ~/.nodebrew ]; then
-#	echo "Install nodebrew..."
-#	curl https://raw.github.com/hokaccha/nodebrew/master/nodebrew | perl - setup
-#	export PATH=$HOME/.nodebrew/current/bin:$PATH
-#	echo "Install node-${SETUP_NODE_VERSION} ..."
-#	nodebrew install-binary $SETUP_NODE_VERSION
-#	nodebrew use $SETUP_NODE_VERSION
-#fi
+# Install pyenv
+if [ $IN_PYTHON -eq 1 ]; then
+	if [ ! -e ~/.pyenv ]; then
+		echo "Installing pyenv..."
+		git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+		export PATH="$HOME/.pyenv/bin:$PATH"
+		eval "$(pyenv init -)"
+		echo "Install ruby-${SETUP_PYTHON_VERSION} ..."
+		pyenv install $SETUP_PYTHON_VERSION
+		pyenv rehash
+		pyenv local $SETUP_PYTHON_VERSION
+		pyenv global $SETUP_PYTHON_VERSION
+	else
+		echo "pyenv is already installed."	
+	fi
+fi
 
 
 echo "Reload rc file."
