@@ -163,6 +163,16 @@ fi
 # Install rbenv
 if [ $IN_RUBY -eq 1 ]; then
 	if [ `command -v rbenv` &>/dev/null ]; then
+		echo "rbenv is already installed."
+		cd ~/.rbenv/plugins/ruby-build
+		git pull origin master
+		if [ `rbenv version | awk -F ' ' '{print $1}'` != "${SETUP_RUBY_VERSION}" ]; then
+			echo "Install ruby-${SETUP_RUBY_VERSION} ..."
+			rbenv install $SETUP_RUBY_VERSION
+			rbenv rehash
+		fi
+		cd ~
+	else
 		if [ ! -e ~/.rbenv ]; then
 			echo "Installing rbenv..."
 			git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
@@ -178,15 +188,6 @@ if [ $IN_RUBY -eq 1 ]; then
 		rbenv rehash
 		rbenv local $SETUP_RUBY_VERSION
 		rbenv global $SETUP_RUBY_VERSION
-	else
-		echo "rbenv is already installed."
-		cd ~/.rbenv/plugins/ruby-build
-		git pull origin master
-		if [ `rbenv version | awk -F ' ' '{print $1}'` != "${SETUP_RUBY_VERSION}" ]; then
-			echo "Install ruby-${SETUP_RUBY_VERSION} ..."
-			rbenv install $SETUP_RUBY_VERSION
-			rbenv rehash
-		fi
 		cd ~
 	fi
 fi
@@ -209,6 +210,14 @@ fi
 # Install pyenv
 if [ $IN_PYTHON -eq 1 ]; then
 	if [ `command -v pyent` >& /dev/null ]; then
+		echo "pyenv is already installed."	
+		if [ `pyenv version | awk -F ' ' '{print $1}'` != "${SETUP_PYTHON_VERSION}" ]; then
+			echo "Install ruby-${SETUP_PYTHON_VERSION} ..."
+			pyenv install $SETUP_PYTHON_VERSION
+			pyenv rehash
+		fi
+		cd ~
+	else
 		echo "Installing pyenv..."
 		if [ ! -e ~/.pyenv ]; then
 			git clone https://github.com/yyuu/pyenv.git ~/.pyenv
@@ -220,13 +229,7 @@ if [ $IN_PYTHON -eq 1 ]; then
 		pyenv rehash
 		pyenv local $SETUP_PYTHON_VERSION
 		pyenv global $SETUP_PYTHON_VERSION
-	else
-		echo "pyenv is already installed."	
-		if [ `pyenv version | awk -F ' ' '{print $1}'` != "${SETUP_PYTHON_VERSION}" ]; then
-			echo "Install ruby-${SETUP_PYTHON_VERSION} ..."
-			pyenv install $SETUP_PYTHON_VERSION
-			pyenv rehash
-		fi
+		cd ~
 	fi
 fi
 
