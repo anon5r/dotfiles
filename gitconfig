@@ -13,7 +13,7 @@ git config --global alias.graphlong "log --graph"
 git config --global alias.graph "log --graph --oneline"
 git config --global color.ui true
 git config --global color.diff true
-git config --global core.editor 'vim'
+git config --global core.editor 'vim -c "set fenc=utf-8"'
 git config --global core.excludesfile "~/.gitignore"
 git config --global merge.ff false
 git config --global log.decorate true
