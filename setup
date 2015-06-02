@@ -1,14 +1,16 @@
 #!/bin/sh
 
-SETUP_RUBY_VERSION="2.1.0"
-SETUP_NODE_VERSION="0.10.22"
+SETUP_RUBY_VERSION="2.2.2"
+SETUP_NODE_VERSION="0.12.2"
+SETUP_PYTHON_VERSION="2.7.9"
 
 SCRIPT_PATH="$(cd $(dirname "${0}");pwd)"
 
 IN_RUBY=0
 IN_NODE=0
+IN_PYTHON=0
 
-while getopts :rn OPT
+while getopts :rnp OPT
 do
 	case $OPT in
 		"r")
@@ -16,6 +18,9 @@ do
 			;;
 		"n")
 			IN_NODE=1
+			;;
+		"p")
+			IN_PYTHON=1
 			;;
 		*)
 			;;
@@ -54,6 +59,9 @@ elif [ ! -L ~/.tmux.conf ]; then
 	ln -s "$SCRIPT_PATH/_tmux.conf" ~/.tmux.conf
 fi
 
+if [ ! -e ~/tmp/vim/undo ]; then
+	mkdir -p ~/tmp/vim/undo
+fi
 
 # Environment of NeoBundle for Vim
 if [ ! -e ~/.vim ]; then
@@ -65,8 +73,13 @@ if [ ! -e ~/.vim/bundle/neobundle.vim ]; then
    echo "No 'NeoBundle' for Vim plugin detected."
    echo "Installing NeoBundle..."
    git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
-   vim +NeoBundleInstall +q
+else
+   echo "Updating NeoBundle..."
+   cd ~/.vim/bundle/neobundle.vim
+   git pull origin master
+   cd ~
 fi
+vim +NeoBundleInstall +q
 
 
 # Git setup
@@ -125,6 +138,11 @@ if [ ! -d ~/.fonts.conf.d/PowerlineSymbols.otf ] && [ -e ~/.plugins/tmux/powerli
 fi
 
 
+# Install homebrew
+if [ ! -e /usr/local/Cellar ]; then
+	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
+
 # Installing tig
 if [ ! -e ~/bin/tig ]; then
 	echo "Installing tig for git..."
@@ -144,19 +162,33 @@ fi
 
 # Install rbenv
 if [ $IN_RUBY -eq 1 ]; then
-	if [ ! -e ~/.rbenv ]; then
-		echo "Installing rbenv..."
-		git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
-		git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+	if [ `command -v rbenv` &>/dev/null ]; then
+		echo "rbenv is already installed."
+		cd ~/.rbenv/plugins/ruby-build
+		git pull origin master
+		if [ `rbenv version | awk -F ' ' '{print $1}'` != "${SETUP_RUBY_VERSION}" ]; then
+			echo "Install ruby-${SETUP_RUBY_VERSION} ..."
+			rbenv install $SETUP_RUBY_VERSION
+			rbenv rehash
+		fi
+		cd ~
+	else
+		if [ ! -e ~/.rbenv ]; then
+			echo "Installing rbenv..."
+			git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+		fi
+		if [ ! -e ~/.rbenv/plugins ]; then
+			mkdir -p ~/.rbenv/plugins
+			git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+		fi
 		export PATH="$HOME/.rbenv/bin:$PATH"
 		eval "$(rbenv init -)"
 		echo "Install ruby-${SETUP_RUBY_VERSION} ..."
 		rbenv install $SETUP_RUBY_VERSION
-		rebenv rehash
+		rbenv rehash
 		rbenv local $SETUP_RUBY_VERSION
 		rbenv global $SETUP_RUBY_VERSION
-	else
-		echo "rbenv is already installed."
+		cd ~
 	fi
 fi
 
@@ -175,15 +207,31 @@ if [ $IN_NODE -eq 1 ]; then
 	fi
 fi
 
-# Install nodebrew
-#if [ ! -e ~/.nodebrew ]; then
-#	echo "Install nodebrew..."
-#	curl https://raw.github.com/hokaccha/nodebrew/master/nodebrew | perl - setup
-#	export PATH=$HOME/.nodebrew/current/bin:$PATH
-#	echo "Install node-${SETUP_NODE_VERSION} ..."
-#	nodebrew install-binary $SETUP_NODE_VERSION
-#	nodebrew use $SETUP_NODE_VERSION
-#fi
+# Install pyenv
+if [ $IN_PYTHON -eq 1 ]; then
+	if [ `command -v pyent` >& /dev/null ]; then
+		echo "pyenv is already installed."	
+		if [ `pyenv version | awk -F ' ' '{print $1}'` != "${SETUP_PYTHON_VERSION}" ]; then
+			echo "Install ruby-${SETUP_PYTHON_VERSION} ..."
+			pyenv install $SETUP_PYTHON_VERSION
+			pyenv rehash
+		fi
+		cd ~
+	else
+		echo "Installing pyenv..."
+		if [ ! -e ~/.pyenv ]; then
+			git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+		fi
+		export PATH="$HOME/.pyenv/bin:$PATH"
+		eval "$(pyenv init -)"
+		echo "Install ruby-${SETUP_PYTHON_VERSION} ..."
+		pyenv install $SETUP_PYTHON_VERSION
+		pyenv rehash
+		pyenv local $SETUP_PYTHON_VERSION
+		pyenv global $SETUP_PYTHON_VERSION
+		cd ~
+	fi
+fi
 
 
 echo "Reload rc file."

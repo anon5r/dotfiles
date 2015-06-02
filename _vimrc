@@ -62,9 +62,11 @@ set whichwrap=b,s,h,l,<,>,[,]
 "検索をファイルの先頭へループしない
 "set nowrapscan
 "undofileの作成場所を制御
-set undodir=~/tmp/vim/undo
-"undofileを作成しない
-set noundofile
+if has('persistent_undo')
+	set undodir=~/tmp/vim/undo
+	"undofileを作成しない
+	set noundofile
+endif
 
 
 " 全角スペースの表示
@@ -105,7 +107,7 @@ set wildmenu wildmode=list:full
 
 
 " Syntaxes
-au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/conf/*,/usr/local/etc/nginx if &ft == '' | setfiletype nginx | endif
+au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/conf/*,/usr/local/etc/nginx/* if &ft == '' | setfiletype nginx | endif
 
 
 
@@ -118,7 +120,7 @@ filetype off
 if has('vim_starting')
 	set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
-call neobundle#rc(expand('~/.vim/bundle/'))
+call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 " NeoBundle modules
 NeoBundle 'Shougo/vimproc'
@@ -132,6 +134,7 @@ NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 "NeoBundle 'itchyny/lightline.vim',{ 'gui': 1 }
 NeoBundle 'toyamarinyon/vim-swift'
 NeoBundle 'terryma/vim-multiple-cursors'
+call neobundle#end()
 filetype plugin indent on
 filetype indent on
 

@@ -21,6 +21,9 @@ elif [ `uname -s` = "Darwin" ]; then
     LD_LIBRARY_PATH=/usr/local/lib:/usr/sfw/lib:/opt/sfw/lib
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib
     ARCHFLAGS="-arch `arch`"
+	if [ `xcode-select -p` ]; then
+		export PATH=`xcode-select -p`/usr/bin:$PATH
+	fi
 fi
 
 echo "`uname -s` configuration loaded."
@@ -33,7 +36,7 @@ autoload -U colors ; colors
 
 # command complete
 fpath=(~/.zsh/completion $fpath)
-autoload -U compinit ; compinit 
+autoload -U compinit ; compinit
 compinit -u
 zstyle ':completion:*' menu select=1
 #zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
@@ -69,7 +72,7 @@ HISTFILE=~/.zsh_history
 HISTSIZE=1000000
 SAVEHIST=1000000
 
-# 指定秒以上かかった処理は詳細表示                                                                                                                                             
+# 指定秒以上かかった処理は詳細表示
 REPORTTIME=2
 
 autoload -U colors ; colors
@@ -146,7 +149,7 @@ bindkey "^[[3~" delete-char
 bindkey "^[[1~" beginning-of-line
 bindkey "^[[4~" end-of-line
 bindkey "^[OH~" beginning-of-line
-bindkey "^[OF~" end-of-line 
+bindkey "^[OF~" end-of-line
 bindkey "^[[7~" beginning-of-line
 bindkey "^[[8~" end-of-line
 # Pageup, Pagedown
@@ -189,7 +192,7 @@ if [ `uname -s` = "Darwin" ] && [ -d /usr/local/opt/mysql ]; then
 	alias mysqlhotcopy='/usr/local/opt/mysql/bin/mysqlhotcopy'
 	alias mysqlmanager='/usr/local/opt/mysql/bin/mysqlmanager'
 	alias mysqlcheck='/usr/local/opt/mysql/bin/mysqlcheck'
-	
+
 	if [[ "$TMUX" != "" ]]; then
 		alias pbcopy="ssh 127.0.0.1 pbcopy"
 		alias launchctl="ssh 127.0.0.1 launchctl"
@@ -271,12 +274,30 @@ fi
 # Support for rbenv
 if [[ -e $HOME/.rbenv/bin ]] && [[ -s $HOME/.rbenv/bin ]]; then
 	export PATH=$HOME/.rbenv/bin:$PATH
-	
+
 	eval "$(rbenv init -)"
 fi
 
+# Support for pyenv
+if [[ -e $HOME/.pyenv/bin ]] && [[ -s $HOME/.pyenv/bin ]]; then
+	export PATH=$HOME/.pyenv/bin:$PATH
+
+	eval "$(pyenv init -)"
+fi
+if [[ -e $HOME/.pyenv/shims ]]; then
+	export PATH=$HOME/.pyenv/shims:$PATH
+fi
+
+
 if [ `uname` = "Darwin" ]; then
-	export PATH="$(brew --prefix php55)/bin:$PATH"
+	# Set PHP
+	if [ -e /usr/local/opt/php56 ]; then
+		export PATH="$(brew --prefix php56)/bin:$PATH"
+	fi
+	# Set Java
+	if [ -e /usr/bin/java ]; then
+		export JAVA_HOME="$(/usr/libexec/java_home)"
+	fi
 fi
 
 
@@ -299,10 +320,8 @@ fi
 ### Dependency local profiles
 if [ -f $HOME/.zshrc.local ]; then
 	source $HOME/.zshrc.local
-fi 
+fi
 
 
 export PATH=.:$PATH
-
-
 
