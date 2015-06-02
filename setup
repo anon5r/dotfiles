@@ -196,7 +196,8 @@ fi
 if [ $IN_NODE -eq 1 ]; then
 	if [ ! -e ~/.nvm ]; then
 		echo "Install nvm..."
-		curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+		#curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+		git clone https://github.com/creationix/nvm.git ~/.nvm && cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
 		source ~/.nvm/nvm.sh
 		echo "Install node-${SETUP_NODE_VERSION} ..."
 		nvm install $SETUP_NODE_VERSION
