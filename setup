@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SETUP_RUBY_VERSION="2.2.2"
+SETUP_RUBY_VERSION="2.3.0"
 SETUP_NODE_VERSION="0.12.2"
 SETUP_PYTHON_VERSION="2.7.9"
 
@@ -139,8 +139,10 @@ fi
 
 
 # Install homebrew
-if [ ! -e /usr/local/Cellar ]; then
-	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+if [ `uname -s` = "Darwin" ]; then
+	if [ ! -e /usr/local/Cellar ]; then
+		ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	fi
 fi
 
 # Installing tig
