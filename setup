@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SETUP_RUBY_VERSION="2.2.2"
+SETUP_RUBY_VERSION="2.3.0"
 SETUP_NODE_VERSION="0.12.2"
 SETUP_PYTHON_VERSION="2.7.9"
 
@@ -139,8 +139,10 @@ fi
 
 
 # Install homebrew
-if [ ! -e /usr/local/Cellar ]; then
-	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+if [ `uname -s` = "Darwin" ]; then
+	if [ ! -e /usr/local/Cellar ]; then
+		ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	fi
 fi
 
 # Installing tig
@@ -196,7 +198,8 @@ fi
 if [ $IN_NODE -eq 1 ]; then
 	if [ ! -e ~/.nvm ]; then
 		echo "Install nvm..."
-		curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+		#curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+		git clone https://github.com/creationix/nvm.git ~/.nvm && cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
 		source ~/.nvm/nvm.sh
 		echo "Install node-${SETUP_NODE_VERSION} ..."
 		nvm install $SETUP_NODE_VERSION
