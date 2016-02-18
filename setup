@@ -215,7 +215,7 @@ if [ $IN_PYTHON -eq 1 ]; then
 	if [ `command -v pyent` >& /dev/null ]; then
 		echo "pyenv is already installed."	
 		if [ `pyenv version | awk -F ' ' '{print $1}'` != "${SETUP_PYTHON_VERSION}" ]; then
-			echo "Install ruby-${SETUP_PYTHON_VERSION} ..."
+			echo "Install python-${SETUP_PYTHON_VERSION} ..."
 			pyenv install $SETUP_PYTHON_VERSION
 			pyenv rehash
 		fi
@@ -227,7 +227,7 @@ if [ $IN_PYTHON -eq 1 ]; then
 		fi
 		export PATH="$HOME/.pyenv/bin:$PATH"
 		eval "$(pyenv init -)"
-		echo "Install ruby-${SETUP_PYTHON_VERSION} ..."
+		echo "Install python-${SETUP_PYTHON_VERSION} ..."
 		pyenv install $SETUP_PYTHON_VERSION
 		pyenv rehash
 		pyenv local $SETUP_PYTHON_VERSION
