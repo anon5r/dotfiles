@@ -58,6 +58,13 @@ elif [ ! -L ~/.tmux.conf ]; then
 	mv ~/.tmux.conf ~/.tmux.conf.old
 	ln -s "$SCRIPT_PATH/_tmux.conf" ~/.tmux.conf
 fi
+if [ ! -e ~/.tmux ]; then
+	ln -s "$SCRIPT_PATH/_tmux/config" ~/.tmux
+elif [ ! -L ~/.tmux ]; then
+	echo "Replace .tmux for dotfiles"
+	mv ~/.tmux ~/_tmux.old
+	ln -s "$SCRIPT_PATH/_tmux/config" ~/.tmux
+fi
 
 if [ ! -e ~/tmp/vim/undo ]; then
 	mkdir -p ~/tmp/vim/undo
