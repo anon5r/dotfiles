@@ -33,4 +33,7 @@ git config --global color.branch true
 git config --global color.grep true
 git config --global color.interactive true
 git config --global color.status true
+# Enable auto --rebase when pull action in specify branches
+git config --global branch.master.rebase true
+git config --global branch.develop.rebase true
 
