@@ -108,9 +108,9 @@ set wildmenu wildmode=list:full
 
 " Syntaxes
 au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/conf/*,/usr/local/etc/nginx/* if &ft == '' | setfiletype nginx | endif
-
-
-
+au BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
+" インデントを設定
+autocmd FileType coffee     setlocal sw=2 sts=2 ts=2 et
 
 
 " NeoBundle設定
@@ -134,7 +134,15 @@ NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 "NeoBundle 'itchyny/lightline.vim',{ 'gui': 1 }
 NeoBundle 'toyamarinyon/vim-swift'
 NeoBundle 'terryma/vim-multiple-cursors'
+" Coffee script
+NeoBundle 'kchmck/vim-coffee-script'
+" js BDDツール
+NeoBundle 'claco/jasmine.vim'
+" indentの深さに色を付ける
+NeoBundle 'nathanaelkane/vim-indent-guides'
 call neobundle#end()
 filetype plugin indent on
 filetype indent on
+
+
 
