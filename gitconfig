@@ -38,7 +38,7 @@ git config --global branch.master.rebase true
 git config --global branch.develop.rebase true
 if ! type "diff-so-fancy" > /dev/null; then
 	if type "npm" > /dev/null; then
-		npm install -g diff-so-fancy
+		sudo $(/usr/bin/which npm) install -g diff-so-fancy
 	elif type "brew" > /dev/null; then
 		brew update
 		brew install diff-so-fancy
