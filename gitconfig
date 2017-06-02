@@ -29,6 +29,7 @@ git config --global alias.edit-unmerged "!f() { git ls-files --unmerged | cut -f
 git config --global alias.add-unmerged "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add \`f\`"
 git config --global alias.log-graph "log --graph --date=short --pretty=format:'%Cgreen%h %cd %Cblue%cn %Creset%s'"
 git config --global alias.log-all "log --graph --all --color --pretty='%x09%h %cn%x09%s %Cred%d%Creset'"
+git config --global alias.unstage 'reset HEAD --'
 git config --global color.branch true
 git config --global color.grep true
 git config --global color.interactive true
@@ -44,5 +45,14 @@ if ! type "diff-so-fancy" > /dev/null; then
 		brew install diff-so-fancy
 	fi
 	git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
+fi
+# Use diff-so-fancy https://github.com/so-fancy/diff-so-fancy
+if ! type "diff-so-fancy" > /dev/null; then
+	git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
+	git config --global alias.dsf '!f() { [ -z "$GIT_PREFIX" ] || cd "$GIT_PREFIX" && git diff --color "$@" | diff-so-fancy  | less --tabs=4 -RFX; }; f'
+	git config --global color.diff-highlight.oldNormal "red bold"
+	git config --global color.diff-highlight.oldHighlight "red bold 52"
+	git config --global color.diff-highlight.newNormal "green bold"
+	git config --global color.diff-highlight.newHighlight "green bold 22"
 fi
 
