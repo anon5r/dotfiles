@@ -17,13 +17,13 @@ if [ `uname -s` = "Linux" ]; then
 	export PATH=$PATH:~/bin
 	LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64:/usr/lib:/usr/lib64:/lib
 elif [ `uname -s` = "Darwin" ]; then
-	export PATH=$HOME/bin:/usr/local/bin:$HOME/bin/depot_tools:$PATH
     LD_LIBRARY_PATH=/usr/local/lib:/usr/sfw/lib:/opt/sfw/lib
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib
     ARCHFLAGS="-arch `arch`"
 	if [ `xcode-select -p` ]; then
 		export PATH=`xcode-select -p`/usr/bin:$PATH
 	fi
+	export PATH=$HOME:$HOME/bin/depot_tools:$HOME/bin:/usr/local/bin:$PATH
 fi
 
 echo "`uname -s` configuration loaded."
@@ -226,7 +226,10 @@ function extract() {
 }
 alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 if [ `uname` = "Darwin" ]; then
-  alias google-chrome='open -a Google\ Chrome'
+  #alias google-chrome='open -a Google\ Chrome'
+  alias google-chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+  alias google-chrome-canary="/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary"
+  alias chromium="/Applications/Chromium.app/Contents/MacOS/Chromium"
 fi
 alias chrome='google-chrome'
 alias -s html=chrome
@@ -324,4 +327,15 @@ fi
 
 
 export PATH=.:$PATH
+
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f $HOME/google-cloud-sdk/path.zsh.inc ]; then
+	source $HOME/google-cloud-sdk/path.zsh.inc
+fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f $HOME/google-cloud-sdk/completion.zsh.inc ]; then
+	source $HOME/google-cloud-sdk/completion.zsh.inc
+fi
 
