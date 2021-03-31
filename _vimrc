@@ -10,7 +10,7 @@ set autoindent
 "バックアップファイルを作るディレクトリ
 "set backupdir=$HOME/vimbackup
 "ファイル保存ダイアログの初期ディレクトリをバッファファイル位置に設定
-set browsedir=buffer 
+set browsedir=buffer
 "クリップボードをWindowsと連携
 set clipboard=unnamed
 "Vi互換をオフ
@@ -112,35 +112,6 @@ au BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
 " インデントを設定
 autocmd FileType coffee     setlocal sw=2 sts=2 ts=2 et
 
-
-" NeoBundle設定
-" 
-set nocompatible
-filetype off
-if has('vim_starting')
-	set runtimepath+=~/.vim/bundle/neobundle.vim
-endif
-call neobundle#begin(expand('~/.vim/bundle/'))
-NeoBundleFetch 'Shougo/neobundle.vim'
-" NeoBundle modules
-NeoBundle 'Shougo/vimproc'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'rstacruz/sparkup', {'rtp':'vim/'}
-NeoBundle 'rails.vim'
-NeoBundle 'alpaca-tc/alpaca_powertabline'
-NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
-"NeoBundle 'itchyny/lightline.vim',{ 'gui': 1 }
-NeoBundle 'toyamarinyon/vim-swift'
-NeoBundle 'terryma/vim-multiple-cursors'
-" Coffee script
-NeoBundle 'kchmck/vim-coffee-script'
-" js BDDツール
-NeoBundle 'claco/jasmine.vim'
-" indentの深さに色を付ける
-NeoBundle 'nathanaelkane/vim-indent-guides'
-call neobundle#end()
 filetype plugin indent on
 filetype indent on
 
