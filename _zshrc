@@ -15,18 +15,20 @@ if [ `uname -s` = "Linux" ]; then
 	export PATH=$HOME/bin:/usr/local/bin:$PATH
 	#export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin
 	export PATH=$PATH:~/bin
-	LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64:/usr/lib:/usr/lib64:/lib
+	export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64:/usr/lib:/usr/lib64:/lib
 elif [ `uname -s` = "Darwin" ]; then
-    LD_LIBRARY_PATH=/usr/local/lib:/usr/sfw/lib:/opt/sfw/lib
-    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib
-    ARCHFLAGS="-arch `arch`"
-	if [ `xcode-select -p` ]; then
-		export PATH=`xcode-select -p`/usr/bin:$PATH
+	if [ $(arch) = "arm64" ] ; then
+		eval $(/opt/homebrew/bin/brew shellenv)
+	elif [ $(arch) = "x86_64" ] ; then
+		eval $(/usr/local/bin/brew shellenv)
 	fi
-	export PATH=$HOME:$HOME/bin/depot_tools:$HOME/bin:/usr/local/bin:$PATH
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib
+    export ARCHFLAGS="-arch `arch`"
+
+	export PATH=$HOME/bin:${PATH+:$PATH}
 fi
 
-echo "`uname -s` configuration loaded."
+echo "$(uname -s) $(arch) configuration loaded."
 
 # function
 find-grep  () { find . -type f -print | xargs grep -n --binary-files=without-match $@ }
@@ -64,7 +66,7 @@ zstyle ':completion:*:sudo:*' matcher-list 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
 zstyle ':completion:*:sudo:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:sudo:cd:*' tag-order local-directories path-directories
 zstyle ':completion:*:sudo:cd:*' ignore-parents parent pwd
-zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
+zstyle ':completion:*:sudo:*' command-path /opt/homebrew/sbin /opt/homebrew/bin /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
 zstyle ':completion:*:sudo:*:*files' ignored-patterns '*?.o' '*?~' '*\#'
 #zstyle ':completion:*:*:git:*' script ~/.zsh/completion/_git
 
@@ -180,34 +182,7 @@ if [ `command -v colordiff` &>/dev/null ]; then
 	alias diff='colordiff'
 fi
 alias py='python'
-alias zf='/usr/local/lib/php/ZendFramework/bin/zf.sh'
 
-if [ `uname -s` = "Darwin" ] && [ -d /usr/local/opt/mysql ]; then
-	alias mysql='/usr/local/opt/mysql/bin/mysql'
-	alias mysqladmin='/usr/local/opt/mysql/bin/mysqladmin'
-	alias mysqlimport='/usr/local/opt/mysql/bin/mysqlimport'
-	alias mysql_config='/usr/local/opt/mysql/bin/mysql_config'
-	alias mysqlbinlog='/usr/local/opt/mysql/bin/mysqlbinlog'
-	alias mysqldump='/usr/local/opt/mysql/bin/mysqldump'
-	alias mysqlhotcopy='/usr/local/opt/mysql/bin/mysqlhotcopy'
-	alias mysqlmanager='/usr/local/opt/mysql/bin/mysqlmanager'
-	alias mysqlcheck='/usr/local/opt/mysql/bin/mysqlcheck'
-
-	if [[ "$TMUX" != "" ]]; then
-		alias pbcopy="ssh 127.0.0.1 pbcopy"
-		alias launchctl="ssh 127.0.0.1 launchctl"
-	fi
-elif [ -d /usr/local/mysql ]; then
-	alias mysql='/usr/local/mysql/bin/mysql'
-	alias mysqladmin='/usr/local/mysql/bin/mysqladmin'
-	alias mysqlimport='/usr/local/mysql/bin/mysqlimport'
-	alias mysql_config='/usr/local/mysql/bin/mysql_config'
-	alias mysqlbinlog='/usr/local/mysql/bin/mysqlbinlog'
-	alias mysqldump='/usr/local/mysql/bin/mysqldump'
-	alias mysqlhotcopy='/usr/local/mysql/bin/mysqlhotcopy'
-	alias mysqlmanager='/usr/local/mysql/bin/mysqlmanager'
-	alias mysqlcheck='/usr/local/mysql/bin/mysqlcheck'
-fi
 
 function extract() {
   case $1 in
@@ -228,8 +203,6 @@ alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 if [ `uname` = "Darwin" ]; then
   #alias google-chrome='open -a Google\ Chrome'
   alias google-chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
-  alias google-chrome-canary="/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary"
-  alias chromium="/Applications/Chromium.app/Contents/MacOS/Chromium"
 fi
 alias chrome='google-chrome'
 alias -s html=chrome
@@ -292,33 +265,12 @@ if [[ -e $HOME/.pyenv/shims ]]; then
 fi
 
 
-if [ `uname` = "Darwin" ]; then
-	# Set PHP
-	if [ -e /usr/local/opt/php56 ]; then
-		export PATH="$(brew --prefix php56)/bin:$PATH"
-	fi
-	# Set Java
-	if [ -e /usr/bin/java ]; then
-		export JAVA_HOME="$(/usr/libexec/java_home)"
-	fi
-fi
-
-
-## Support for phpenv
-#if [[ -e $HOME/.phpenv/bin ]] && [[ -s $HOME/.phpenv/bin ]]; then
-#	export PATH=$HOME/.phpenv/bin:$PATH
-#	eval "$(phpenv init -)"
-#fi
-
 # Support for nvm
 if [ -d $HOME/.nvm ]; then
 	source $HOME/.nvm/nvm.sh
 fi
 
-### Added by the Heroku Toolbelt
-if [[ -d /usr/local/heroku/bin ]]; then
-	export PATH="/usr/local/heroku/bin:$PATH"
-fi
+
 
 ### Dependency local profiles
 if [ -f $HOME/.zshrc.local ]; then
@@ -329,13 +281,4 @@ fi
 export PATH=.:$PATH
 
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f $HOME/google-cloud-sdk/path.zsh.inc ]; then
-	source $HOME/google-cloud-sdk/path.zsh.inc
-fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f $HOME/google-cloud-sdk/completion.zsh.inc ]; then
-	source $HOME/google-cloud-sdk/completion.zsh.inc
-fi
 
